@@ -14,12 +14,18 @@ TaskHandle_t Task1;
 TaskHandle_t Task2;
 SemaphoreHandle_t semaphore;
 
+static RTC_DATA_ATTR struct timeval sleep_enter_time;
+struct timeval now;
+gettimeofday(&now, NULL);
+int sleep_time_ms = (now.tv_sec - sleep_enter_time.tv_sec) * 1000 + (now.tv_usec - sleep_enter_time.tv_usec) / 1000;
+
 void setup()
 {
   Serial.begin(115200); //enable serial monitor
   pinMode(dht_gpio1,OUTPUT);
   pinMode(dht_gpio2,OUTPUT);
   semaphore = xSemaphoreCreateMutex();
+   print_esp_sleep_get_wakeup_cause();
   
 //To call the dht-task function:
 
@@ -61,14 +67,10 @@ void dht_task2(void *pvParameter2)
         vTaskDelay(10000 / portTICK_PERIOD_MS); //will read sensor data every ten seconds.
         
     }
-void loop()
+
+
+void print_esp_sleep_get_wakeup_cause()
 {
-static RTC_DATA_ATTR struct timeval sleep_enter_time;
-struct timeval now;
-
-    gettimeofday(&now, NULL);
-    int sleep_time_ms = (now.tv_sec - sleep_enter_time.tv_sec) * 1000 + (now.tv_usec - sleep_enter_time.tv_usec) / 1000;
-
      switch (esp_sleep_get_wakeup_cause()) {
       
      
@@ -135,4 +137,10 @@ struct timeval now;
 
     esp_deep_sleep_start();
 
+}
+
+void loop()
+{
+  
+}
 }
