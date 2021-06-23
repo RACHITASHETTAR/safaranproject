@@ -34,7 +34,7 @@ void setup()
   mesh.onChangedConnections(&changedConnectionCallback);
   mesh.onNodeTimeAdjusted(&nodeTimeAdjustedCallback);
   userScheduler.addTask(dht_task1);
-  taskSendMessage.enable();
+  dht_task1.enable();
   
 //To call the dht-task function:
 //Create tasks: to send messages and get readings;
