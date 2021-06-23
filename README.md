@@ -1,5 +1,5 @@
 # safaranproject
-
+//////////////////////////////////////////////////
 # Project step by step procedure:
 step1: Upload the code provided on two ESP32 boards and modify the print data to easily identify the sender node and receiver nodes.
 step2: With the boards connected to your computer, open a serial connection with each board. You can use the Serial Monitor, or you can use a software like PuTTY and open two windows for both the ESP32 boards. We  should see that both boards receive data.
